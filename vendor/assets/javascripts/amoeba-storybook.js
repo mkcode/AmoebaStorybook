@@ -747,7 +747,10 @@
 
   AmoebaSB.SlideLayout = (function() {
 
-    function SlideLayout($stage) {
+    function SlideLayout($stage, $stageHolder) {
+      var _this = this;
+      this.$stage = $stage;
+      this.$stageHolder = $stageHolder;
       this._adjustStage = __bind(this._adjustStage, this);
 
       this._setupStage = __bind(this._setupStage, this);
@@ -764,8 +767,6 @@
 
       this.center = __bind(this.center, this);
 
-      var _this = this;
-      this.$stageHolder = $('#stageHolder');
       this.slideInset = 20;
       this.stageWidth = 960;
       this.stageHeight = 720;
@@ -774,7 +775,7 @@
       document.addEventListener(AmoebaSB.eventHelper.resizeEventName, function(event) {
         return _this._adjustStage();
       });
-      this._setupStage($stage);
+      this._setupStage(this.$stage);
       this._adjustStage();
     }
 

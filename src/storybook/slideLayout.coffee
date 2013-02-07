@@ -1,8 +1,7 @@
 # Give it a height and width and this will return positions and transitions for elememnts within this stage
 
 class AmoebaSB.SlideLayout
-  constructor: ($stage) ->
-    @$stageHolder = $('#stageHolder')
+  constructor: (@$stage, @$stageHolder) ->
     @slideInset = 20
 
     @stageWidth = 960
@@ -16,7 +15,7 @@ class AmoebaSB.SlideLayout
       this._adjustStage()
     )
 
-    this._setupStage($stage)
+    this._setupStage(@$stage)
     this._adjustStage()
 
   center: (eWidth, eHeight, more) =>

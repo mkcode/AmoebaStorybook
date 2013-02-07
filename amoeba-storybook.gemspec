@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "amoeba-storybook"
-  s.version = "0.0.19"
+  s.version = "0.0.21"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Amoeba Consulting, LLC."]
@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
     "src/storybook/eventHelper.coffee",
     "src/storybook/geometry.coffee",
     "src/storybook/navigationControls.coffee",
+    "src/storybook/slideBase.coffee",
     "src/storybook/slideLayout.coffee",
     "src/storybook/slideTransitions.coffee",
     "src/storybook/svgCog.coffee",
