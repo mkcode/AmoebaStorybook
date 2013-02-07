@@ -12,6 +12,8 @@
     exports.hello = test;
   }
 
+  window.testt = test;
+
 }).call(this);
 
 (function() {
