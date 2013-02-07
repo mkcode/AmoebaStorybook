@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "amoeba-storybook"
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Amoeba Consulting, LLC."]
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "amoeba-storybook.min.js",
     "grunt.js",
     "package.json",
+    "projectFilesBackup/.idea/AmoebaStorybook.iml",
     "spec/index.html",
     "spec/support/chai-jquery.js",
     "spec/support/jquery-1.9.0.js",
