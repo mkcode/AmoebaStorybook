@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "amoeba-storybook"
-  s.version = "0.0.21"
+  s.version = "0.0.22"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Amoeba Consulting, LLC."]
@@ -34,14 +34,12 @@ Gem::Specification.new do |s|
     "spec/support/sinon-chai.js",
     "src/amoeba-storybook.coffee",
     "src/setup.coffee",
-    "src/storybook/cogDemo.coffee",
     "src/storybook/eventHelper.coffee",
     "src/storybook/geometry.coffee",
     "src/storybook/navigationControls.coffee",
     "src/storybook/slideBase.coffee",
     "src/storybook/slideLayout.coffee",
     "src/storybook/slideTransitions.coffee",
-    "src/storybook/svgCog.coffee",
     "vendor/assets/javascripts/amoeba-storybook.js",
     "vendor/assets/javascripts/amoeba-storybook.min.js"
   ]
