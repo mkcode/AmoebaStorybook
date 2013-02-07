@@ -1,5 +1,5 @@
-#= require_tree storybook
 #= require_self
+#= require_tree storybook
 
 window.Amoebaa ?= {}
 
