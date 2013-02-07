@@ -1,27 +1,20 @@
 (function() {
-  var num, test,
-    _this = this;
+  var _ref;
 
-  num = 0;
-
-  test = function() {
-    return "hello world " + (num++);
-  };
-
-  if (typeof exports === "object" && exports) {
-    exports.hello = test;
+  if ((_ref = window.AmoebaSB) == null) {
+    window.AmoebaSB = {};
   }
 
-  console.log("asshat");
-
-  window.testt = test;
+  jQuery(function($) {
+    return AmoebaSB.eventHelper = new AmoebaSB.EventHelper;
+  });
 
 }).call(this);
 
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  Amoebaa.EventHelper = (function() {
+  AmoebaSB.EventHelper = (function() {
 
     function EventHelper() {
       this._handleKeyEvent = __bind(this._handleKeyEvent, this);
@@ -113,14 +106,7 @@
 }).call(this);
 
 (function() {
-  var _ref;
 
-  if ((_ref = window.Amoebaa) == null) {
-    window.Amoebaa = {};
-  }
 
-  jQuery(function($) {
-    return Amoebaa.eventHelper = new Amoebaa.EventHelper;
-  });
 
 }).call(this);

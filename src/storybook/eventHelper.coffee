@@ -1,7 +1,7 @@
 
 # sends out notifications on navagation key events
 
-class Amoebaa.EventHelper
+class AmoebaSB.EventHelper
   constructor: () ->
     this._setupKeyHandler()
     @nextKeyEventName = "next:keyEvent"
