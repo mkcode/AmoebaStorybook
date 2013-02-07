@@ -1,6 +1,6 @@
 {
   "name": "amoeba-storybook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Amoeba Storybook is a package used to create animated css3 presentations",
   "author": "Amoeba Consulting, LLC",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "underscore": "1.4.3",
     "backbone": "0.9.10"
   },
+  "main": "amoeba-storybook.js",
   "devDependencies": {
     "grunt": "0.3.17",
     "grunt-coffee": "0.0.6",
