@@ -12,6 +12,8 @@
     exports.hello = test;
   }
 
+  console.log("asshat");
+
   window.testt = test;
 
 }).call(this);

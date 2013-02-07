@@ -6,5 +6,7 @@ test = =>
 if typeof exports == "object" && exports
 	exports.hello = test
 
+console.log("asshat")
+
 window.testt = test;
 
