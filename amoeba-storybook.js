@@ -596,6 +596,84 @@
 }).call(this);
 
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  AmoebaSB.NavigationControls = (function() {
+
+    function NavigationControls(inNumSteps) {
+      this._setupNextPrevButtons = __bind(this._setupNextPrevButtons, this);
+
+      this._setupRadioButtons = __bind(this._setupRadioButtons, this);
+
+      var _this = this;
+      this.cssID = "navigationControls";
+      this.el = $("#" + this.cssID);
+      this._setupRadioButtons(inNumSteps);
+      this._setupNextPrevButtons();
+      document.addEventListener("slideTransitions:in", function(event) {
+        var theIndex;
+        theIndex = Number(event.detail);
+        return $("input:radio[name=presentationRadioGroup]:nth(" + theIndex + ")").attr('checked', true);
+      });
+    }
+
+    NavigationControls.prototype._setupRadioButtons = function(inNumSteps) {
+      var theContainer, _i, _results,
+        _this = this;
+      theContainer = $('<div/>').css({
+        position: "absolute",
+        width: "100%",
+        bottom: "0px",
+        left: "50%"
+      }).appendTo(this.el);
+      _.each((function() {
+        _results = [];
+        for (var _i = 0; 0 <= inNumSteps ? _i < inNumSteps : _i > inNumSteps; 0 <= inNumSteps ? _i++ : _i--){ _results.push(_i); }
+        return _results;
+      }).apply(this), function(theStep, index) {
+        var theRadio;
+        theRadio = $('<input/>').attr({
+          type: "radio",
+          name: "presentationRadioGroup",
+          value: theStep
+        }).appendTo(theContainer);
+        if (theStep === 0) {
+          return theRadio.attr({
+            checked: ""
+          });
+        }
+      });
+      return $("input[name=presentationRadioGroup]:radio").change(function() {
+        var theValue;
+        theValue = $(this).val();
+        return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", theValue);
+      });
+    };
+
+    NavigationControls.prototype._setupNextPrevButtons = function(inNumSteps) {
+      var theButton,
+        _this = this;
+      theButton = $('<a/>').attr({
+        id: "nextButton"
+      }).appendTo(this.el);
+      theButton.click(function(event) {
+        return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName);
+      });
+      theButton = $('<a/>').attr({
+        id: "prevButton"
+      }).appendTo(this.el);
+      return theButton.click(function(event) {
+        return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.prevKeyEventName);
+      });
+    };
+
+    return NavigationControls;
+
+  })();
+
+}).call(this);
+
+(function() {
   var CogSegment,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
