@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
     "src/amoeba-storybook.coffee",
     "src/setup.coffee",
     "src/storybook/eventHelper.coffee",
+    "src/storybook/geometry.coffee",
     "vendor/assets/javascripts/amoeba-storybook.js",
     "vendor/assets/javascripts/amoeba-storybook.min.js"
   ]
