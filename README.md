@@ -1,4 +1,4 @@
 AmoebaStorybook
 ===============
 
-A css3 animated presentation framework
+Amoeba Storybook is a package used to create animated css3 presentations
