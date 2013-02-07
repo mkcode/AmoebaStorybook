@@ -38,6 +38,8 @@ Gem::Specification.new do |s|
     "src/storybook/eventHelper.coffee",
     "src/storybook/geometry.coffee",
     "src/storybook/navigationControls.coffee",
+    "src/storybook/slideLayout.coffee",
+    "src/storybook/slideTransitions.coffee",
     "src/storybook/svgCog.coffee",
     "vendor/assets/javascripts/amoeba-storybook.js",
     "vendor/assets/javascripts/amoeba-storybook.min.js"

@@ -676,6 +676,75 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
+  AmoebaSB.Slide_Base = (function() {
+
+    function Slide_Base() {
+      this._setupElement = __bind(this._setupElement, this);
+
+      this._update = __bind(this._update, this);
+
+      this.slideIn = __bind(this.slideIn, this);
+
+      this.slideOut = __bind(this.slideOut, this);
+
+      this.previous = __bind(this.previous, this);
+
+      this.next = __bind(this.next, this);
+      this.stepIndex = 0;
+      this.previousStepIndex = 0;
+      this.numSteps = 0;
+      this.cssID = "????";
+      this.transition = 'fade';
+      this.setup();
+    }
+
+    Slide_Base.prototype.setup = function() {
+      return console.log("must subclass and implement setup");
+    };
+
+    Slide_Base.prototype.next = function() {
+      if (this.stepIndex < (this.numSteps - 1)) {
+        this.previousStepIndex = this.stepIndex;
+        this.stepIndex++;
+        this._update();
+        return true;
+      }
+      return false;
+    };
+
+    Slide_Base.prototype.previous = function() {
+      if (this.stepIndex > 0) {
+        this.previousStepIndex = this.stepIndex;
+        this.stepIndex--;
+        this._update();
+        return true;
+      }
+      return false;
+    };
+
+    Slide_Base.prototype.slideOut = function() {};
+
+    Slide_Base.prototype.slideIn = function() {};
+
+    Slide_Base.prototype._update = function() {
+      return console.log("must subclass and implement _update");
+    };
+
+    Slide_Base.prototype._setupElement = function(theID) {
+      this.cssID = theID;
+      this.el = $("#" + this.cssID);
+      return AmoebaSB.layout.setupSlide(this.el);
+    };
+
+    return Slide_Base;
+
+  })();
+
+}).call(this);
+
+(function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
   AmoebaSB.SlideLayout = (function() {
 
     function SlideLayout($stage) {
