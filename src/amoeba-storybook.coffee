@@ -1,2 +1,2 @@
 #= require setup
-#= require ./storybook/eventHelper
+#= require_tree ./storybook
