@@ -67,3 +67,44 @@
   @include navButton('right.svg', false); // warning this must go after setting background:, background: resets the size
 }
 
+/*********************************************
+ * Navigation radio buttons
+ *********************************************/
+
+// SNG Not sure what to do about these variables, copied over for now
+$amoebaGreen: #A6CC2F;
+$amoebaGreenMedium: #8BA400;
+$amoebaGreenDark: #384F0E;
+$amoebaGrey: #EAEBED;
+
+#navigationControls {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+@mixin customRadioButton($backgroundColor, $frameColor) {
+  @include appearance(none);
+  height:15px;
+  width:15px;
+  background:$backgroundColor;
+  border-radius: 8px;
+  border:4px solid $frameColor;
+  margin: 4px 4px;
+  cursor:pointer;
+  z-index: 1000;
+}
+
+#navigationControls input[type='radio'] {
+  @include customRadioButton($amoebaGreen, transparent);
+
+}
+
+#navigationControls input[type='radio']:checked {
+  @include customRadioButton($amoebaGreenDark, $amoebaGreen);
+}
+
+
