@@ -99,6 +99,14 @@ $amoebaGrey: #EAEBED;
   margin: 4px 4px;
   cursor:pointer;
   z-index: 1000;
+
+  @include transition(opacity 200ms ease-in);
+
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 #navigationControls input[type='radio'] {
