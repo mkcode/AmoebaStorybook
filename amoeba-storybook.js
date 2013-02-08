@@ -382,10 +382,15 @@
       this._setupRadioButtons(inNumSteps);
       this._setupNextPrevButtons();
       document.addEventListener("slideTransitions:in", function(event) {
-        var theIndex;
+        var ratio, theIndex;
         theIndex = Number(event.detail);
-        return $("input:radio[name=presentationRadioGroup]:nth(" + theIndex + ")").attr('checked', true);
+        $("input:radio[name=presentationRadioGroup]:nth(" + theIndex + ")").attr('checked', true);
+        ratio = .4;
+        return $(".progress").css({
+          width: "" + (ratio * window.innerWidth) + "px"
+        });
       });
+      $('<div/>').appendTo(this.el).addClass("progress").html('<span></span>');
     }
 
     NavigationControls.prototype._setupRadioButtons = function(inNumSteps) {

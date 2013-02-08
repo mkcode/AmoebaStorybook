@@ -13,7 +13,18 @@ class AmoebaSB.NavigationControls
 
       # select the radio button at this index
       $("input:radio[name=presentationRadioGroup]:nth(#{theIndex})").attr('checked',true)
+
+
+      ratio = .4 # ( pastCount / ( totalCount - 1 ) )
+
+      $(".progress").css(width: "#{ratio * window.innerWidth}px")
     )
+
+    # progress bar at bottom
+    $('<div/>')
+      .appendTo(@el)
+      .addClass("progress")
+      .html('<span></span>')
 
   _setupRadioButtons: (inNumSteps) =>
     # make a containing div with layout css embedded

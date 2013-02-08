@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "amoeba-storybook"
-  s.version = "0.0.22"
+  s.version = "0.0.23"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Amoeba Consulting, LLC."]
-  s.date = "2013-02-07"
+  s.date = "2013-02-08"
   s.description = "amoeba-storybook is a gem used to create animated css3 presentations."
   s.email = "sayhi@amoe.ba"
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "grunt.js",
     "package.json",
     "projectFilesBackup/.idea/AmoebaStorybook.iml",
+    "scss/storyboard.scss",
     "spec/index.html",
     "spec/support/chai-jquery.js",
     "spec/support/jquery-1.9.0.js",
@@ -41,7 +42,8 @@ Gem::Specification.new do |s|
     "src/storybook/slideLayout.coffee",
     "src/storybook/slideTransitions.coffee",
     "vendor/assets/javascripts/amoeba-storybook.js",
-    "vendor/assets/javascripts/amoeba-storybook.min.js"
+    "vendor/assets/javascripts/amoeba-storybook.min.js",
+    "vendor/assets/stylesheets/storyboard.css"
   ]
   s.homepage = "https://github.com/sgehrman/AmoebaStorybook"
   s.licenses = ["MIT"]
