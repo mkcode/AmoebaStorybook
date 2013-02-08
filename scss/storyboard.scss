@@ -11,7 +11,6 @@
   bottom: 0;
   left: 0;
   background: rgba(0,0,0,0.2);
-  @include transition(width 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985));
 }
 
 // this seems to give us a bigger click area (code borrowed from reveal.js)
@@ -25,6 +24,8 @@
 }
 
 #progressBar span {
+  @include transition(width 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985));
+
   background-color: #00D9ED;
   display: block;
   height: 100%;
