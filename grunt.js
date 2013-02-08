@@ -76,7 +76,9 @@ module.exports = function(grunt) {
       main: {
         files: [
           { src: ['<%= pkg.name %>.js'], dest: 'vendor/assets/javascripts/' },
-          { src: ['<%= pkg.name %>.min.js'], dest: 'vendor/assets/javascripts/' }
+          { src: ['<%= pkg.name %>.min.js'], dest: 'vendor/assets/javascripts/' },
+
+          { src: ['images/*'], dest: 'vendor/assets/stylesheets/' }
         ]
       }
     },

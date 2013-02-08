@@ -29,3 +29,41 @@
   height: 100%;
   width: 0px;
 }
+
+/*********************************************
+ * Navigation buttons
+ *********************************************/
+
+@mixin navButton($url, $onLeft) {
+  background: transparent url($url) no-repeat;
+  @include background-size(contain); // warning this must go after setting background:, background: resets the size
+
+  position: absolute;
+  top: 50%;
+
+  @if ($onLeft) {
+    left: 10px;  }
+  @else {
+    right: 10px; }
+
+  height: 50px;
+  width: 50px;
+  opacity: 0.6;
+  z-index: 1000;
+
+  &:active {
+    opacity: 1;
+  }
+  //&:hover {
+  //  opacity: 0.8;
+  //}
+}
+
+#prevButton {
+  @include navButton('left.svg', true); // warning this must go after setting background:, background: resets the size
+}
+
+#nextButton {
+  @include navButton('right.svg', false); // warning this must go after setting background:, background: resets the size
+}
+

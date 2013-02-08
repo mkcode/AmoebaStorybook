@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
     "amoeba-storybook.min.js",
     "grunt.js",
     "package.json",
-    "projectFilesBackup/.idea/AmoebaStorybook.iml",
     "scss/storyboard.scss",
     "spec/index.html",
     "spec/support/chai-jquery.js",
