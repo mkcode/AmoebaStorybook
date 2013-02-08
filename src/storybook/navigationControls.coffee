@@ -14,16 +14,15 @@ class AmoebaSB.NavigationControls
       # select the radio button at this index
       $("input:radio[name=presentationRadioGroup]:nth(#{theIndex})").attr('checked',true)
 
+      ratio = theIndex / (inNumSteps - 1)
 
-      ratio = ( theIndex / ( inNumSteps - 1 ) )
-
-      $(".progress").css(width: "#{ratio * window.innerWidth}px")
+      $("#progressBar").css(width: "#{ratio * window.innerWidth}px")
     )
 
     # progress bar at bottom
     $('<div/>')
       .appendTo(@el)
-      .addClass("progress")
+      .attr({id: "progressBar"})
       .html('<span></span>')
       .click( (event) =>
         console.log("click on progress, needs implementation")

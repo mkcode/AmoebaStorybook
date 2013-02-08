@@ -386,11 +386,13 @@
         theIndex = Number(event.detail);
         $("input:radio[name=presentationRadioGroup]:nth(" + theIndex + ")").attr('checked', true);
         ratio = theIndex / (inNumSteps - 1);
-        return $(".progress").css({
+        return $("#progressBar").css({
           width: "" + (ratio * window.innerWidth) + "px"
         });
       });
-      $('<div/>').appendTo(this.el).addClass("progress").html('<span></span>').click(function(event) {
+      $('<div/>').appendTo(this.el).attr({
+        id: "progressBar"
+      }).html('<span></span>').click(function(event) {
         return console.log("click on progress, needs implementation");
       });
     }

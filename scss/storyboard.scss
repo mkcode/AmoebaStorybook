@@ -3,7 +3,7 @@
  *********************************************/
 @import "compass/css3";
 
-.progress {
+#progressBar {
   position: fixed;
   display: block;
   height: 3px;
@@ -15,7 +15,7 @@
 }
 
 // this seems to give us a bigger click area (code borrowed from reveal.js)
-.progress:after {
+#progressBar:after {
   content: '';
   display: 'block';
   position: absolute;
@@ -24,7 +24,7 @@
   top: -8px;
 }
 
-.progress span {
+#progressBar span {
   display: block;
   height: 100%;
   width: 0px;
