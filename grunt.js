@@ -30,9 +30,29 @@ module.exports = function(grunt) {
         }
       }
     },
+   compass: {
+      dev: {
+        src: 'scss',
+        dest: 'vendor/assets/stylesheets',
+        outputstyle: 'expanded',
+        linecomments: true
+      },
+      prod: {
+        src: 'scss',
+        dest: 'vendor/assets/stylesheets',
+        outputstyle: 'compressed',
+        linecomments: false,
+        forcecompile: true
+      }
+    },
     watch: {
       files: ['src/**/*.coffee', 'spec/index.html', '<config:coffee.specs.src>'],
-      tasks: 'default'
+      tasks: 'default',
+
+      compass: {
+        files: ['scss/*.scss'],
+        tasks: ['compass:dev']
+      }
     },
     growl: {
       snockets: {
@@ -72,6 +92,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coffee');
   grunt.loadNpmTasks('grunt-barkeep');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-compass');
 
   grunt.registerTask('mocha', 'run mocha-phantomjs', function () {
     var done = this.async();
@@ -89,5 +110,6 @@ module.exports = function(grunt) {
     mocha.stderr.pipe(process.stderr);
   });
 
-  grunt.registerTask('default', 'snockets growl:snockets coffee growl:coffee mocha min copy');
+  grunt.registerTask('default', 'snockets growl:snockets coffee growl:coffee mocha compass:prod min copy');
 };
+
