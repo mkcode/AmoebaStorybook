@@ -112,6 +112,6 @@ module.exports = function(grunt) {
     mocha.stderr.pipe(process.stderr);
   });
 
-  grunt.registerTask('default', 'snockets growl:snockets coffee growl:coffee mocha compass:prod min copy');
+  grunt.registerTask('default', 'snockets growl:snockets coffee growl:coffee mocha compass:dev min copy');
 };
 

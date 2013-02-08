@@ -48,15 +48,18 @@
 
   height: 50px;
   width: 50px;
-  opacity: 0.6;
+  opacity: 0.5;
   z-index: 1000;
 
-  &:active {
-    opacity: 1;
+  @include transition(opacity 200ms ease-in);
+
+  &:hover {
+    opacity: 0.8;
+
+    &:active {
+      opacity: 1;
+    }
   }
-  //&:hover {
-  //  opacity: 0.8;
-  //}
 }
 
 #prevButton {
