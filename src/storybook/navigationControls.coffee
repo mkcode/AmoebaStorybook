@@ -1,10 +1,10 @@
 
 class AmoebaSB.NavigationControls
-  constructor: (inNumSteps) ->
+  constructor: (@numSteps) ->
     @cssID = "navigationControls"
     @el = $("##{@cssID}")
 
-    this._setupRadioButtons(inNumSteps)
+    this._setupRadioButtons()
     this._setupNextPrevButtons()
 
     # update selected radio button when slide changes
@@ -14,9 +14,9 @@ class AmoebaSB.NavigationControls
       # select the radio button at this index
       $("input:radio[name=presentationRadioGroup]:nth(#{theIndex})").attr('checked',true)
 
-      ratio = theIndex / (inNumSteps - 1)
+      ratio = theIndex / (@numSteps - 1)
 
-      $("#progressBar").css(width: "#{ratio * window.innerWidth}px")
+      $("#progressBar span").css(width: "#{ratio * window.innerWidth}px")
     )
 
     # progress bar at bottom
@@ -25,16 +25,20 @@ class AmoebaSB.NavigationControls
       .attr({id: "progressBar"})
       .html('<span></span>')
       .click( (event) =>
-        console.log("click on progress, needs implementation")
+
+        console.log("event.clientX: #{event.clientX} @el.get(0).offsetWidth: #{@el.get(0).offsetWidth}")
+
+        slideIndex = Math.floor( ( event.clientX / @el.get(0).offsetWidth ) * @numSteps)
+        AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex)
       )
 
-  _setupRadioButtons: (inNumSteps) =>
+  _setupRadioButtons: () =>
     # make a containing div with layout css embedded
     theContainer = $('<div/>')
       .css({position: "absolute", width:"100%", bottom: "0px", left: "50%"})
       .appendTo(@el)
 
-    _.each([0...inNumSteps], (theStep, index) =>
+    _.each([0...@numSteps], (theStep, index) =>
       theRadio = $('<input/>')
         .attr({type: "radio", name: "presentationRadioGroup", value: theStep})
         .appendTo(theContainer)
@@ -51,7 +55,7 @@ class AmoebaSB.NavigationControls
       AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", theValue)
     )
 
-  _setupNextPrevButtons: (inNumSteps) =>
+  _setupNextPrevButtons: () =>
     theButton = $('<a/>')
       .attr({id: "nextButton"}) # , href: "presentation/1"})
       .appendTo(@el)

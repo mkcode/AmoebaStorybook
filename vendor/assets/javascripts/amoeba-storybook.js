@@ -371,34 +371,38 @@
 
   AmoebaSB.NavigationControls = (function() {
 
-    function NavigationControls(inNumSteps) {
+    function NavigationControls(numSteps) {
+      var _this = this;
+      this.numSteps = numSteps;
       this._setupNextPrevButtons = __bind(this._setupNextPrevButtons, this);
 
       this._setupRadioButtons = __bind(this._setupRadioButtons, this);
 
-      var _this = this;
       this.cssID = "navigationControls";
       this.el = $("#" + this.cssID);
-      this._setupRadioButtons(inNumSteps);
+      this._setupRadioButtons();
       this._setupNextPrevButtons();
       document.addEventListener("slideTransitions:in", function(event) {
         var ratio, theIndex;
         theIndex = Number(event.detail);
         $("input:radio[name=presentationRadioGroup]:nth(" + theIndex + ")").attr('checked', true);
-        ratio = theIndex / (inNumSteps - 1);
-        return $("#progressBar").css({
+        ratio = theIndex / (_this.numSteps - 1);
+        return $("#progressBar span").css({
           width: "" + (ratio * window.innerWidth) + "px"
         });
       });
       $('<div/>').appendTo(this.el).attr({
         id: "progressBar"
       }).html('<span></span>').click(function(event) {
-        return console.log("click on progress, needs implementation");
+        var slideIndex;
+        console.log("event.clientX: " + event.clientX + " @el.get(0).offsetWidth: " + (_this.el.get(0).offsetWidth));
+        slideIndex = Math.floor((event.clientX / _this.el.get(0).offsetWidth) * _this.numSteps);
+        return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex);
       });
     }
 
-    NavigationControls.prototype._setupRadioButtons = function(inNumSteps) {
-      var theContainer, _i, _results,
+    NavigationControls.prototype._setupRadioButtons = function() {
+      var theContainer, _i, _ref, _results,
         _this = this;
       theContainer = $('<div/>').css({
         position: "absolute",
@@ -408,7 +412,7 @@
       }).appendTo(this.el);
       _.each((function() {
         _results = [];
-        for (var _i = 0; 0 <= inNumSteps ? _i < inNumSteps : _i > inNumSteps; 0 <= inNumSteps ? _i++ : _i--){ _results.push(_i); }
+        for (var _i = 0, _ref = this.numSteps; 0 <= _ref ? _i < _ref : _i > _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
         return _results;
       }).apply(this), function(theStep, index) {
         var theRadio;
@@ -430,7 +434,7 @@
       });
     };
 
-    NavigationControls.prototype._setupNextPrevButtons = function(inNumSteps) {
+    NavigationControls.prototype._setupNextPrevButtons = function() {
       var theButton,
         _this = this;
       theButton = $('<a/>').attr({
