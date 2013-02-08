@@ -385,12 +385,14 @@
         var ratio, theIndex;
         theIndex = Number(event.detail);
         $("input:radio[name=presentationRadioGroup]:nth(" + theIndex + ")").attr('checked', true);
-        ratio = .4;
+        ratio = theIndex / (inNumSteps - 1);
         return $(".progress").css({
           width: "" + (ratio * window.innerWidth) + "px"
         });
       });
-      $('<div/>').appendTo(this.el).addClass("progress").html('<span></span>');
+      $('<div/>').appendTo(this.el).addClass("progress").html('<span></span>').click(function(event) {
+        return console.log("click on progress, needs implementation");
+      });
     }
 
     NavigationControls.prototype._setupRadioButtons = function(inNumSteps) {
