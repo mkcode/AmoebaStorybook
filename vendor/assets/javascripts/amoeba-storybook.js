@@ -395,7 +395,6 @@
         id: "progressBar"
       }).html('<span></span>').click(function(event) {
         var slideIndex;
-        console.log("event.clientX: " + event.clientX + " @el.get(0).offsetWidth: " + (_this.el.get(0).offsetWidth));
         slideIndex = Math.floor((event.clientX / _this.el.get(0).offsetWidth) * _this.numSteps);
         return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex);
       });

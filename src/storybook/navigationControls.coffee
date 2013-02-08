@@ -25,9 +25,6 @@ class AmoebaSB.NavigationControls
       .attr({id: "progressBar"})
       .html('<span></span>')
       .click( (event) =>
-
-        console.log("event.clientX: #{event.clientX} @el.get(0).offsetWidth: #{@el.get(0).offsetWidth}")
-
         slideIndex = Math.floor( ( event.clientX / @el.get(0).offsetWidth ) * @numSteps)
         AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex)
       )
