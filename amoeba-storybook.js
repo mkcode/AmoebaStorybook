@@ -12,6 +12,86 @@
 }).call(this);
 
 (function() {
+  var _ref,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  AmoebaSB.KeyframeAnimationPlugin = (function() {
+
+    function KeyframeAnimationPlugin() {
+      this.animationCallback = __bind(this.animationCallback, this);
+
+      this._setupJQueryFunctions = __bind(this._setupJQueryFunctions, this);
+
+      var key, opts, style, _props;
+      if (AmoebaSB.keyframeAnimationPlugin != null) {
+        console.log("AmoebaSB.keyframeAnimationPlugin created twice?");
+      }
+      _props = {
+        animation: ['animation', 'animationend', 'keyframes'],
+        webkitAnimation: ['-webkit-animation', 'webkitAnimationEnd', '-webkit-keyframes'],
+        MozAnimation: ['-moz-animation', 'animationend', '-moz-keyframes'],
+        OAnimation: ['-o-animation', 'oAnimationEnd', '-o-keyframes'],
+        MSAnimation: ['-ms-animation', 'MSAnimationEnd', '-ms-keyframes']
+      };
+      style = document.createElement('div').style;
+      for (key in _props) {
+        if (style[key] !== void 0) {
+          opts = _props[key];
+          this.animationProperty = opts[0];
+          this.endAnimation = opts[1];
+          this.keyFramesProperty = opts[2];
+          break;
+        }
+      }
+      this._setupJQueryFunctions();
+    }
+
+    KeyframeAnimationPlugin.prototype._setupJQueryFunctions = function() {
+      $.fn.keyframe = function(name, duration, easing, delay, iterations, direction, callback) {
+        var params;
+        if (typeof duration === 'object') {
+          callback = duration.complete;
+          direction = duration.direction;
+          iterations = duration.iterations;
+          delay = duration.delay;
+          easing = duration.easing;
+          duration = duration.duration;
+        }
+        direction = direction || 'normal';
+        iterations = iterations || 1;
+        delay = delay || 0;
+        easing = easing || 'linear';
+        duration = duration || 1;
+        if (typeof duration === 'number') {
+          duration += 'ms';
+        }
+        if (typeof delay === 'number') {
+          delay += 'ms';
+        }
+        if (callback) {
+          AmoebaSB.keyframeAnimationPlugin.animationCallback(this, callback);
+        }
+        params = [name, duration, easing, delay, iterations, direction].join(' ');
+        return this.css(AmoebaSB.keyframeAnimationPlugin.animationProperty, params);
+      };
+      return this;
+    };
+
+    KeyframeAnimationPlugin.prototype.animationCallback = function(element, callback) {
+      return element.one(this.endAnimation, element, callback);
+    };
+
+    return KeyframeAnimationPlugin;
+
+  })();
+
+  if ((_ref = AmoebaSB.keyframeAnimationPlugin) == null) {
+    AmoebaSB.keyframeAnimationPlugin = new AmoebaSB.KeyframeAnimationPlugin();
+  }
+
+}).call(this);
+
+(function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   AmoebaSB.EventHelper = (function() {
