@@ -251,7 +251,10 @@ class AmoebaSB.SlideTransitions
 
         # animate active slide
         _.each(@_activeArray, (trans, index) =>
-          if animate then active.el.transition(trans) else active.el.css(trans)
+          if animate
+            active.el.transition(trans)
+          else
+            active.el.css(trans)
         )
 
         # animate next slide
@@ -277,3 +280,6 @@ class AmoebaSB.SlideTransitions
         finalPosition = $.extend(finalPosition, finalParams)
 
       @_nextArray.push(finalPosition)
+
+      # last step for active is to display: none
+      @_activeArray.push({display: 'none'})

@@ -60,6 +60,7 @@ class AmoebaSB.SlideLayout
       scale: 1
       opacity: opacity
       transformOrigin: '50% 50%'
+      display: 'block'
 
     return result
 
@@ -67,6 +68,7 @@ class AmoebaSB.SlideLayout
     $el.css(
       position: "absolute"
       opacity: 0
+      display: 'none'
 
       width: @slideWidth
       height: @slideHeight

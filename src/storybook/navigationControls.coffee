@@ -54,7 +54,7 @@ class AmoebaSB.NavigationControls
 
   _setupNextPrevButtons: () =>
     theButton = $('<a/>')
-      .attr({id: "nextButton"}) # , href: "presentation/1"})
+      .attr({id: "nextButton"})
       .appendTo(@el)
 
     theButton.click( (event) =>
@@ -62,7 +62,7 @@ class AmoebaSB.NavigationControls
     )
 
     theButton = $('<a/>')
-      .attr({id: "prevButton"}) # , href: "presentation/2"})
+      .attr({id: "prevButton"})
       .appendTo(@el)
 
     theButton.click( (event) =>

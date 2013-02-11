@@ -702,7 +702,8 @@
         rotateX: 0,
         scale: 1,
         opacity: opacity,
-        transformOrigin: '50% 50%'
+        transformOrigin: '50% 50%',
+        display: 'block'
       };
       return result;
     };
@@ -711,6 +712,7 @@
       return $el.css({
         position: "absolute",
         opacity: 0,
+        display: 'none',
         width: this.slideWidth,
         height: this.slideHeight
       });
@@ -1105,7 +1107,10 @@
         if (finalParams != null) {
           finalPosition = $.extend(finalPosition, finalParams);
         }
-        return this._nextArray.push(finalPosition);
+        this._nextArray.push(finalPosition);
+        return this._activeArray.push({
+          display: 'none'
+        });
       };
 
       return SlideTransition;

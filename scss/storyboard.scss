@@ -88,6 +88,7 @@ $amoebaGrey: #EAEBED;
   left: 0px;
   height: 100%;
   width: 100%;
+  z-index: 1000;
 }
 
 @mixin customRadioButton($backgroundColor, $frameColor) {
@@ -99,7 +100,6 @@ $amoebaGrey: #EAEBED;
   border:4px solid $frameColor;
   margin: 4px 4px;
   cursor:pointer;
-  z-index: 1000;
 
   @include transition(opacity 200ms ease-in);
 
