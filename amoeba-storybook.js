@@ -846,16 +846,7 @@
         } else {
           next.el.css(AmoebaSB.layout.normal());
         }
-        this._sendEvents(active, next);
-        if ((theIndex % 2) === 0) {
-          return $("#presentationBackColor").transition({
-            backgroundColor: "rgba(255,2,2,0.4)"
-          });
-        } else {
-          return $("#presentationBackColor").transition({
-            backgroundColor: "rgba(0,0,0,0)"
-          });
-        }
+        return this._sendEvents(active, next);
       }
     };
 

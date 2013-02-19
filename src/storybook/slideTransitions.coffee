@@ -35,13 +35,14 @@ class AmoebaSB.SlideTransitions
 
       this._sendEvents(active, next)
 
-      if ((theIndex % 2) == 0)
-        $("#presentationBackColor").transition(backgroundColor: "rgba(255,2,2,0.4)")
-      else
-        $("#presentationBackColor").transition(backgroundColor: "rgba(0,0,0,0)")
+# just an experiment, remove if not used in the future
+#      if ((theIndex % 2) == 0)
+#        $("#presentationBackColor").transition(backgroundColor: "rgba(255,2,2,0.4)")
+#      else
+#        $("#presentationBackColor").transition(backgroundColor: "rgba(0,0,0,0)")
 
 
-        # ===============
+  # ===============
   # Private methods
   # ===============
 
