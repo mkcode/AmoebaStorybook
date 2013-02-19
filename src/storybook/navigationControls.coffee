@@ -30,15 +30,32 @@ class AmoebaSB.NavigationControls
       )
 
   _setupRadioButtons: () =>
-    # make a containing div with layout css embedded
+
+
+      # crazy hack to horizontally center it
     theContainer = $('<div/>')
-      .css({position: "absolute", width:"100%", bottom: "0px", left: "50%"})
+      .css(
+        bottom: "0px"
+        margin: '0 auto'
+        bottom: 0
+        float: 'left'
+        left: '50%'
+        position: 'absolute'
+      )
       .appendTo(@el)
+
+    theSpan = $('<span/>')
+      .css(
+        float: 'left'
+        position: 'relative'
+        right: '50%'
+      )
+      .appendTo(theContainer)
 
     _.each([0...@numSteps], (theStep, index) =>
       theRadio = $('<input/>')
         .attr({type: "radio", name: "presentationRadioGroup", value: theStep})
-        .appendTo(theContainer)
+        .appendTo(theSpan)
 
       # check first radio
       if theStep == 0

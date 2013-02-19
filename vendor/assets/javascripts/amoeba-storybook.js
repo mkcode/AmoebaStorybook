@@ -481,14 +481,21 @@
     }
 
     NavigationControls.prototype._setupRadioButtons = function() {
-      var theContainer, _i, _ref, _results,
+      var theContainer, theSpan, _i, _ref, _results,
         _this = this;
       theContainer = $('<div/>').css({
-        position: "absolute",
-        width: "100%",
         bottom: "0px",
-        left: "50%"
+        margin: '0 auto',
+        bottom: 0,
+        float: 'left',
+        left: '50%',
+        position: 'absolute'
       }).appendTo(this.el);
+      theSpan = $('<span/>').css({
+        float: 'left',
+        position: 'relative',
+        right: '50%'
+      }).appendTo(theContainer);
       _.each((function() {
         _results = [];
         for (var _i = 0, _ref = this.numSteps; 0 <= _ref ? _i < _ref : _i > _ref; 0 <= _ref ? _i++ : _i--){ _results.push(_i); }
@@ -499,7 +506,7 @@
           type: "radio",
           name: "presentationRadioGroup",
           value: theStep
-        }).appendTo(theContainer);
+        }).appendTo(theSpan);
         if (theStep === 0) {
           return theRadio.attr({
             checked: ""
