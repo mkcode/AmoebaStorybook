@@ -35,10 +35,10 @@ class AmoebaSB.Slide_Base
 
     return false
 
-  slideOut: =>
+  slideOut: (afterTransitionComplete) =>
 #    console.log("slideOut: #{this.cssID}")
 
-  slideIn: =>
+  slideIn: (afterTransitionComplete) =>
 #    console.log("slideIn: #{this.cssID}")
 
   _update: =>

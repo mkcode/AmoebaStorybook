@@ -23,24 +23,28 @@ class AmoebaSB.SlideTransitions
       @activeStepIndex = theIndex
       next = this._slideAtIndex(@activeStepIndex)
 
+      # events are sent after the animation is finished
+      sendEventsCallback = =>
+        this._sendEvents(active, next, true)
+
       if next? && active?
         # if going backwards, just slide back
         if goingBack
-          this._transitionSpec('previous').run(active, next, true)
+          this._transitionSpec('previous').run(active, next, sendEventsCallback)
         else
-          this._transitionSpec(next.transition).run(active, next, true)
+          this._transitionSpec(next.transition).run(active, next, sendEventsCallback)
       else
         # just put in the next slide, this happens on initial page load/refresh
         next.el.css(AmoebaSB.layout.normal())
+        sendEventsCallback()
 
-      this._sendEvents(active, next)
+      this._sendEvents(active, next, false)
 
 # just an experiment, remove if not used in the future
 #      if ((theIndex % 2) == 0)
 #        $("#presentationBackColor").transition(backgroundColor: "rgba(255,2,2,0.4)")
 #      else
 #        $("#presentationBackColor").transition(backgroundColor: "rgba(0,0,0,0)")
-
 
   # ===============
   # Private methods
@@ -70,14 +74,20 @@ class AmoebaSB.SlideTransitions
 
     return @slides[theIndex]
 
-  _sendEvents: (active, next) =>
+  _sendEvents: (active, next, afterTransitionComplete) =>
     if active?
-      active.slideOut()
-      AmoebaSB.eventHelper.triggerEvent(active.el.get(0), "slideTransitions:out", @slides.indexOf(active))
+      active.slideOut(afterTransitionComplete)
+
+      # only sending out the slideTransition event before transition complete (navigation bar needs instant update)
+      if !afterTransitionComplete
+        AmoebaSB.eventHelper.triggerEvent(active.el.get(0), "slideTransitions:out", @slides.indexOf(active))
 
     if next?
-      next.slideIn()
-      AmoebaSB.eventHelper.triggerEvent(next.el.get(0), "slideTransitions:in", @slides.indexOf(next))
+      next.slideIn(afterTransitionComplete)
+
+      # only sending out the slideTransition event before transition complete (navigation bar needs instant update)
+      if !afterTransitionComplete
+        AmoebaSB.eventHelper.triggerEvent(next.el.get(0), "slideTransitions:in", @slides.indexOf(next))
 
   _transitionSpec: (theID) =>
     switch (theID)
@@ -237,8 +247,11 @@ class AmoebaSB.SlideTransitions
       @_nextArray = []
       @_activeArray = []
 
-    run: (active, next, animate) =>
+    run: (active, next, callback) =>
       if active? and next?
+
+        @completeCallback = callback
+
         next.el.css($.extend(AmoebaSB.layout.normal(0), @nextSlideState))
 
         # do we have a custom transform origin?
@@ -250,17 +263,13 @@ class AmoebaSB.SlideTransitions
             transformOrigin: @transformOrigin
           )
 
-        # animate active slide
         _.each(@_activeArray, (trans, index) =>
-          if animate
-            active.el.transition(trans)
-          else
-            active.el.css(trans)
+          active.el.transition(trans)
         )
 
         # animate next slide
         _.each(@_nextArray, (trans, index) =>
-          if animate then next.el.transition(trans) else next.el.css(trans)
+          next.el.transition(trans)
         )
       else
         console.log("SlideTransition run: bad parameter")
@@ -280,7 +289,16 @@ class AmoebaSB.SlideTransitions
       if finalParams?
         finalPosition = $.extend(finalPosition, finalParams)
 
+      callback = =>
+        if @completeCallback?
+          @completeCallback()
+
+      # add callback on nextSlide so we can send the slideIn and slideOut events
+      finalPosition = $.extend(finalPosition, {complete: callback})
+
       @_nextArray.push(finalPosition)
 
       # last step for active is to display: none
-      @_activeArray.push({display: 'none'})
+      @_activeArray.push(
+        display: 'none'
+      )

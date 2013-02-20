@@ -592,9 +592,9 @@
       return false;
     };
 
-    Slide_Base.prototype.slideOut = function() {};
+    Slide_Base.prototype.slideOut = function(afterTransitionComplete) {};
 
-    Slide_Base.prototype.slideIn = function() {};
+    Slide_Base.prototype.slideIn = function(afterTransitionComplete) {};
 
     Slide_Base.prototype._update = function() {
       return console.log("must subclass and implement _update");
@@ -833,7 +833,8 @@
     };
 
     SlideTransitions.prototype.goto = function(theIndex) {
-      var active, goingBack, next;
+      var active, goingBack, next, sendEventsCallback,
+        _this = this;
       theIndex = this._validStepIndex(theIndex);
       if (this.activeStepIndex != null) {
         goingBack = theIndex < this.activeStepIndex;
@@ -844,16 +845,20 @@
         }
         this.activeStepIndex = theIndex;
         next = this._slideAtIndex(this.activeStepIndex);
+        sendEventsCallback = function() {
+          return _this._sendEvents(active, next, true);
+        };
         if ((next != null) && (active != null)) {
           if (goingBack) {
-            this._transitionSpec('previous').run(active, next, true);
+            this._transitionSpec('previous').run(active, next, sendEventsCallback);
           } else {
-            this._transitionSpec(next.transition).run(active, next, true);
+            this._transitionSpec(next.transition).run(active, next, sendEventsCallback);
           }
         } else {
           next.el.css(AmoebaSB.layout.normal());
+          sendEventsCallback();
         }
-        return this._sendEvents(active, next);
+        return this._sendEvents(active, next, false);
       }
     };
 
@@ -884,14 +889,18 @@
       return this.slides[theIndex];
     };
 
-    SlideTransitions.prototype._sendEvents = function(active, next) {
+    SlideTransitions.prototype._sendEvents = function(active, next, afterTransitionComplete) {
       if (active != null) {
-        active.slideOut();
-        AmoebaSB.eventHelper.triggerEvent(active.el.get(0), "slideTransitions:out", this.slides.indexOf(active));
+        active.slideOut(afterTransitionComplete);
+        if (!afterTransitionComplete) {
+          AmoebaSB.eventHelper.triggerEvent(active.el.get(0), "slideTransitions:out", this.slides.indexOf(active));
+        }
       }
       if (next != null) {
-        next.slideIn();
-        return AmoebaSB.eventHelper.triggerEvent(next.el.get(0), "slideTransitions:in", this.slides.indexOf(next));
+        next.slideIn(afterTransitionComplete);
+        if (!afterTransitionComplete) {
+          return AmoebaSB.eventHelper.triggerEvent(next.el.get(0), "slideTransitions:in", this.slides.indexOf(next));
+        }
       }
     };
 
@@ -1056,9 +1065,10 @@
         this._activeArray = [];
       }
 
-      SlideTransition.prototype.run = function(active, next, animate) {
+      SlideTransition.prototype.run = function(active, next, callback) {
         var _this = this;
         if ((active != null) && (next != null)) {
+          this.completeCallback = callback;
           next.el.css($.extend(AmoebaSB.layout.normal(0), this.nextSlideState));
           if (this.transformOrigin != null) {
             active.el.css({
@@ -1069,18 +1079,10 @@
             });
           }
           _.each(this._activeArray, function(trans, index) {
-            if (animate) {
-              return active.el.transition(trans);
-            } else {
-              return active.el.css(trans);
-            }
+            return active.el.transition(trans);
           });
           return _.each(this._nextArray, function(trans, index) {
-            if (animate) {
-              return next.el.transition(trans);
-            } else {
-              return next.el.css(trans);
-            }
+            return next.el.transition(trans);
           });
         } else {
           return console.log("SlideTransition run: bad parameter");
@@ -1100,11 +1102,20 @@
       };
 
       SlideTransition.prototype.finalize = function(finalParams) {
-        var finalPosition;
+        var callback, finalPosition,
+          _this = this;
         finalPosition = AmoebaSB.layout.normal();
         if (finalParams != null) {
           finalPosition = $.extend(finalPosition, finalParams);
         }
+        callback = function() {
+          if (_this.completeCallback != null) {
+            return _this.completeCallback();
+          }
+        };
+        finalPosition = $.extend(finalPosition, {
+          complete: callback
+        });
         this._nextArray.push(finalPosition);
         return this._activeArray.push({
           display: 'none'

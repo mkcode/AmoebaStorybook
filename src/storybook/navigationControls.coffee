@@ -30,8 +30,6 @@ class AmoebaSB.NavigationControls
       )
 
   _setupRadioButtons: () =>
-
-
       # crazy hack to horizontally center it
     theContainer = $('<div/>')
       .css(
