@@ -15,20 +15,7 @@ class AmoebaSB.Slide_Base
 
   next: =>
     if @stepIndex < (@numSteps - 1)
-      @previousStepIndex = @stepIndex
-
       @stepIndex++
-      this._update()
-
-      return true
-
-    return false
-
-  previous: =>
-    if @stepIndex > 0
-      @previousStepIndex = @stepIndex
-
-      @stepIndex--
       this._update()
 
       return true

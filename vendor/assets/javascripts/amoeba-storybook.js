@@ -557,8 +557,6 @@
 
       this.slideOut = __bind(this.slideOut, this);
 
-      this.previous = __bind(this.previous, this);
-
       this.next = __bind(this.next, this);
       this.stepIndex = 0;
       this.previousStepIndex = 0;
@@ -574,18 +572,7 @@
 
     Slide_Base.prototype.next = function() {
       if (this.stepIndex < (this.numSteps - 1)) {
-        this.previousStepIndex = this.stepIndex;
         this.stepIndex++;
-        this._update();
-        return true;
-      }
-      return false;
-    };
-
-    Slide_Base.prototype.previous = function() {
-      if (this.stepIndex > 0) {
-        this.previousStepIndex = this.stepIndex;
-        this.stepIndex--;
         this._update();
         return true;
       }
