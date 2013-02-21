@@ -721,9 +721,6 @@
       } else {
         scale = hScale;
       }
-      if (scale > 1) {
-        scale = 1;
-      }
       if (scale < 0) {
         scale = 0;
       }

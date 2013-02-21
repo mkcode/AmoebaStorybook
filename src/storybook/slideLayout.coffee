@@ -73,7 +73,7 @@ class AmoebaSB.SlideLayout
       width: @slideWidth
       height: @slideHeight
 
-#      border: "1px solid rgba(0, 0, 0, .1)"
+#      border: "1px dotted rgba(0, 0, 0, .1)"
 #      backgroundColor: "rgba(255,255,255,0.8)"
 #      borderRadius: 10
 #      boxShadow: "0 2px 6px rgba(0, 0, 0, .4)"
@@ -88,8 +88,9 @@ class AmoebaSB.SlideLayout
     else
       scale = hScale
 
-    if (scale > 1)
-      scale = 1
+#    we want it to scale up as well as down
+#    if (scale > 1)
+#      scale = 1
 
     if (scale < 0)
       scale = 0
