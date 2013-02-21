@@ -624,11 +624,11 @@
 
       this.center = __bind(this.center, this);
 
-      this.slideInset = 20;
-      this.stageWidth = 960;
-      this.stageHeight = 720;
-      this.slideWidth = this.stageWidth - this.slideInset;
-      this.slideHeight = this.stageHeight - this.slideInset;
+      this.slideInset = 10;
+      this.slideWidth = 940;
+      this.slideHeight = 700;
+      this.stageWidth = this.slideWidth + this.slideInset;
+      this.stageHeight = this.slideHeight + this.slideInset;
       document.addEventListener(AmoebaSB.eventHelper.resizeEventName, function(event) {
         return _this._adjustStage();
       });

@@ -2,13 +2,13 @@
 
 class AmoebaSB.SlideLayout
   constructor: (@$stage, @$stageHolder) ->
-    @slideInset = 20
+    @slideInset = 10
 
-    @stageWidth = 960
-    @stageHeight = 720
+    @slideWidth = 940
+    @slideHeight = 700
 
-    @slideWidth = @stageWidth - @slideInset
-    @slideHeight = @stageHeight - @slideInset
+    @stageWidth = @slideWidth + @slideInset
+    @stageHeight = @slideHeight + @slideInset
 
     # rescale stage when window is resized
     document.addEventListener(AmoebaSB.eventHelper.resizeEventName, (event) =>
@@ -73,7 +73,7 @@ class AmoebaSB.SlideLayout
       width: @slideWidth
       height: @slideHeight
 
-#      border: "1px dotted rgba(0, 0, 0, .1)"
+#      border: "1px dotted rgba(0, 0, 0, .2)"
 #      backgroundColor: "rgba(255,255,255,0.8)"
 #      borderRadius: 10
 #      boxShadow: "0 2px 6px rgba(0, 0, 0, .4)"
