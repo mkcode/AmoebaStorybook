@@ -47,7 +47,7 @@ class AmoebaSB.KeyframeAnimationPlugin
       if (callback)
         AmoebaSB.keyframeAnimationPlugin.animationCallback(this, callback)
 
-      params = [name, duration, easing, delay, iterations, direction].join(' ')
+      params = [name, duration, easing, delay, iterations, direction, 'forwards'].join(' ')
 
       this.css(AmoebaSB.keyframeAnimationPlugin.animationProperty, params)
 
