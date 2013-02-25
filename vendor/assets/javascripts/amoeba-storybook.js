@@ -683,9 +683,6 @@
       if (left == null) {
         left = true;
       }
-      if (more == null) {
-        more = void 0;
-      }
       result = {
         x: left ? -window.innerWidth : window.innerWidth
       };
@@ -734,6 +731,9 @@
         scale = wScale;
       } else {
         scale = hScale;
+      }
+      if (scale > 2) {
+        scale = 2;
       }
       if (scale < 0) {
         scale = 0;

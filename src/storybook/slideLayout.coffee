@@ -39,7 +39,7 @@ class AmoebaSB.SlideLayout
 
     return result
 
-  horizOffscreen: (left=true, more=undefined) =>
+  horizOffscreen: (left=true, more) =>
     result =
       x: if left then -window.innerWidth else window.innerWidth
 
@@ -88,9 +88,9 @@ class AmoebaSB.SlideLayout
     else
       scale = hScale
 
-#    we want it to scale up as well as down
-#    if (scale > 1)
-#      scale = 1
+    # we want it to scale up as well as down, but limit to 2x
+    if (scale > 2)
+      scale = 2
 
     if (scale < 0)
       scale = 0
