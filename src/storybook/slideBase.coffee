@@ -22,11 +22,23 @@ class AmoebaSB.Slide_Base
 
     return false
 
+  # !! subclasses don't call or override this, override slideOut instead
+  # this avoids having to call super in slideOut
+  slideOutEvent: (afterTransitionComplete) =>
+    @activeSlide = false
+    this.slideOut(afterTransitionComplete)
+
+  # !! subclasses don't call or override this, override slideIn instead
+  # this avoids having to call super in slideOut
+  slideInEvent: (afterTransitionComplete) =>
+    @activeSlide = true
+    this.slideIn(afterTransitionComplete)
+
   slideOut: (afterTransitionComplete) =>
-#    console.log("slideOut: #{this.cssID}")
+    # subclasses override to get notified
 
   slideIn: (afterTransitionComplete) =>
-#    console.log("slideIn: #{this.cssID}")
+    # subclasses override to get notified
 
   _update: =>
     console.log("must subclass and implement _update")

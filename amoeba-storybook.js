@@ -557,6 +557,10 @@
 
       this.slideOut = __bind(this.slideOut, this);
 
+      this.slideInEvent = __bind(this.slideInEvent, this);
+
+      this.slideOutEvent = __bind(this.slideOutEvent, this);
+
       this.next = __bind(this.next, this);
       this.stepIndex = 0;
       this.previousStepIndex = 0;
@@ -577,6 +581,16 @@
         return true;
       }
       return false;
+    };
+
+    Slide_Base.prototype.slideOutEvent = function(afterTransitionComplete) {
+      this.activeSlide = false;
+      return this.slideOut(afterTransitionComplete);
+    };
+
+    Slide_Base.prototype.slideInEvent = function(afterTransitionComplete) {
+      this.activeSlide = true;
+      return this.slideIn(afterTransitionComplete);
     };
 
     Slide_Base.prototype.slideOut = function(afterTransitionComplete) {};
@@ -875,13 +889,13 @@
 
     SlideTransitions.prototype._sendEvents = function(active, next, afterTransitionComplete) {
       if (active != null) {
-        active.slideOut(afterTransitionComplete);
+        active.slideOutEvent(afterTransitionComplete);
         if (!afterTransitionComplete) {
           AmoebaSB.eventHelper.triggerEvent(active.el.get(0), "slideTransitions:out", this.slides.indexOf(active));
         }
       }
       if (next != null) {
-        next.slideIn(afterTransitionComplete);
+        next.slideInEvent(afterTransitionComplete);
         if (!afterTransitionComplete) {
           return AmoebaSB.eventHelper.triggerEvent(next.el.get(0), "slideTransitions:in", this.slides.indexOf(next));
         }

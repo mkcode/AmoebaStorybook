@@ -76,14 +76,14 @@ class AmoebaSB.SlideTransitions
 
   _sendEvents: (active, next, afterTransitionComplete) =>
     if active?
-      active.slideOut(afterTransitionComplete)
+      active.slideOutEvent(afterTransitionComplete)
 
       # only sending out the slideTransition event before transition complete (navigation bar needs instant update)
       if !afterTransitionComplete
         AmoebaSB.eventHelper.triggerEvent(active.el.get(0), "slideTransitions:out", @slides.indexOf(active))
 
     if next?
-      next.slideIn(afterTransitionComplete)
+      next.slideInEvent(afterTransitionComplete)
 
       # only sending out the slideTransition event before transition complete (navigation bar needs instant update)
       if !afterTransitionComplete
