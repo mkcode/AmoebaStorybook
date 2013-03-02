@@ -523,13 +523,13 @@
     NavigationControls.prototype._setupNextPrevButtons = function() {
       var theButton,
         _this = this;
-      theButton = $('<a/>').attr({
+      theButton = $('<div/>').attr({
         id: "nextButton"
       }).appendTo(this.el);
       theButton.click(function(event) {
         return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName);
       });
-      theButton = $('<a/>').attr({
+      theButton = $('<div/>').attr({
         id: "prevButton"
       }).appendTo(this.el);
       return theButton.click(function(event) {

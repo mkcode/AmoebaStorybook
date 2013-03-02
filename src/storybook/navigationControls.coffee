@@ -68,7 +68,7 @@ class AmoebaSB.NavigationControls
     )
 
   _setupNextPrevButtons: () =>
-    theButton = $('<a/>')
+    theButton = $('<div/>')
       .attr({id: "nextButton"})
       .appendTo(@el)
 
@@ -76,7 +76,7 @@ class AmoebaSB.NavigationControls
       AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName)
     )
 
-    theButton = $('<a/>')
+    theButton = $('<div/>')
       .attr({id: "prevButton"})
       .appendTo(@el)
 
