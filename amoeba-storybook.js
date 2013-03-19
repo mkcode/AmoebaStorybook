@@ -451,17 +451,35 @@
 
   AmoebaSB.NavigationControls = (function() {
 
-    function NavigationControls(numSteps) {
+    function NavigationControls(numSteps, showNextPrevButtons, showCircleProgressBar, showProgressBar) {
       var _this = this;
       this.numSteps = numSteps;
+      if (showNextPrevButtons == null) {
+        showNextPrevButtons = true;
+      }
+      if (showCircleProgressBar == null) {
+        showCircleProgressBar = true;
+      }
+      if (showProgressBar == null) {
+        showProgressBar = true;
+      }
+      this._setupProgressBar = __bind(this._setupProgressBar, this);
+
       this._setupNextPrevButtons = __bind(this._setupNextPrevButtons, this);
 
       this._setupRadioButtons = __bind(this._setupRadioButtons, this);
 
       this.cssID = "navigationControls";
       this.el = $("#" + this.cssID);
-      this._setupRadioButtons();
-      this._setupNextPrevButtons();
+      if (showCircleProgressBar) {
+        this._setupRadioButtons();
+      }
+      if (showNextPrevButtons) {
+        this._setupNextPrevButtons();
+      }
+      if (showProgressBar) {
+        this._setupProgressBar();
+      }
       document.addEventListener("slideTransitions:in", function(event) {
         var ratio, theIndex;
         theIndex = Number(event.detail);
@@ -470,13 +488,6 @@
         return $("#progressBar span").css({
           width: "" + (ratio * window.innerWidth) + "px"
         });
-      });
-      $('<div/>').appendTo(this.el).attr({
-        id: "progressBar"
-      }).html('<span></span>').click(function(event) {
-        var slideIndex;
-        slideIndex = Math.floor((event.clientX / _this.el.get(0).offsetWidth) * _this.numSteps);
-        return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex);
       });
     }
 
@@ -534,6 +545,17 @@
       }).appendTo(this.el);
       return theButton.click(function(event) {
         return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.prevKeyEventName);
+      });
+    };
+
+    NavigationControls.prototype._setupProgressBar = function() {
+      var _this = this;
+      return $('<div/>').appendTo(this.el).attr({
+        id: "progressBar"
+      }).html('<span></span>').click(function(event) {
+        var slideIndex;
+        slideIndex = Math.floor((event.clientX / _this.el.get(0).offsetWidth) * _this.numSteps);
+        return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex);
       });
     };
 

@@ -1,11 +1,17 @@
 
 class AmoebaSB.NavigationControls
-  constructor: (@numSteps) ->
+  constructor: (@numSteps, showNextPrevButtons=true, showCircleProgressBar=true, showProgressBar=true) ->
     @cssID = "navigationControls"
     @el = $("##{@cssID}")
 
-    this._setupRadioButtons()
-    this._setupNextPrevButtons()
+    if showCircleProgressBar
+      this._setupRadioButtons()
+
+    if showNextPrevButtons
+      this._setupNextPrevButtons()
+
+    if showProgressBar
+      this._setupProgressBar()
 
     # update selected radio button when slide changes
     document.addEventListener("slideTransitions:in", (event) =>
@@ -18,16 +24,6 @@ class AmoebaSB.NavigationControls
 
       $("#progressBar span").css(width: "#{ratio * window.innerWidth}px")
     )
-
-    # progress bar at bottom
-    $('<div/>')
-      .appendTo(@el)
-      .attr({id: "progressBar"})
-      .html('<span></span>')
-      .click( (event) =>
-        slideIndex = Math.floor( ( event.clientX / @el.get(0).offsetWidth ) * @numSteps)
-        AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex)
-      )
 
   _setupRadioButtons: () =>
       # crazy hack to horizontally center it
@@ -83,3 +79,14 @@ class AmoebaSB.NavigationControls
     theButton.click( (event) =>
       AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.prevKeyEventName)
     )
+
+  _setupProgressBar: () =>
+     # progress bar at bottom
+    $('<div/>')
+      .appendTo(@el)
+      .attr({id: "progressBar"})
+      .html('<span></span>')
+      .click( (event) =>
+        slideIndex = Math.floor( ( event.clientX / @el.get(0).offsetWidth ) * @numSteps)
+        AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex)
+      )
