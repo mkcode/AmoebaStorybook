@@ -43,8 +43,23 @@ class AmoebaSB.Slide_Base
   _update: =>
     console.log("must subclass and implement _update")
 
+  # call this to set things up inside your setup override
   _setupElement: (theID) =>
     @cssID = theID
     @el = $("##{@cssID}")
     AmoebaSB.layout.setupSlide(@el)
 
+  # call this when slide is done animating, or call with an appropriate timeout
+  # to give the user time to read the text.  This will autoadvance to the next slide
+  _slideIsDone: (delay) =>
+    # don't do anything if we are not the current slide, could be called when the current
+    # slide has changed, but a previous call back is called before old card is torn down
+    if @activeSlide
+      if delay?
+        setTimeout(=>
+          # again make sure we are the current slide after the timeout
+          if @activeSlide
+            AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName)
+        , delay)
+      else
+        AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName)

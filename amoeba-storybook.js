@@ -549,6 +549,8 @@
   AmoebaSB.Slide_Base = (function() {
 
     function Slide_Base() {
+      this._slideIsDone = __bind(this._slideIsDone, this);
+
       this._setupElement = __bind(this._setupElement, this);
 
       this._update = __bind(this._update, this);
@@ -605,6 +607,21 @@
       this.cssID = theID;
       this.el = $("#" + this.cssID);
       return AmoebaSB.layout.setupSlide(this.el);
+    };
+
+    Slide_Base.prototype._slideIsDone = function(delay) {
+      var _this = this;
+      if (this.activeSlide) {
+        if (delay != null) {
+          return setTimeout(function() {
+            if (_this.activeSlide) {
+              return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName);
+            }
+          }, delay);
+        } else {
+          return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName);
+        }
+      }
     };
 
     return Slide_Base;
