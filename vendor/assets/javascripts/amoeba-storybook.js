@@ -101,14 +101,16 @@
 
       this._setupKeyHandler = __bind(this._setupKeyHandler, this);
 
+      this.togglePause = __bind(this.togglePause, this);
+
       this.triggerEvent = __bind(this.triggerEvent, this);
       this._setupKeyHandler();
+      this.paused = false;
       this.nextKeyEventName = "next:keyEvent";
       this.prevKeyEventName = "prev:keyEvent";
       this.pauseKeyEventName = "pause:keyEvent";
       this.resizeEventName = "resize:windowEvent";
       this.indexEventName = "index:event";
-      this.pauseEventName = "pause:event";
     }
 
     EventHelper.prototype.triggerEvent = function(el, eventName, detail) {
@@ -116,6 +118,13 @@
       event = document.createEvent("CustomEvent");
       event.initCustomEvent(eventName, true, true, detail);
       return el.dispatchEvent(event);
+    };
+
+    EventHelper.prototype.togglePause = function() {
+      this.paused = !this.paused;
+      if (!this.paused) {
+        return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName);
+      }
     };
 
     EventHelper.prototype._setupKeyHandler = function() {
@@ -640,6 +649,9 @@
 
     Slide_Base.prototype._slideIsDone = function(delay) {
       var _this = this;
+      if (AmoebaSB.eventHelper.paused) {
+        return;
+      }
       if (this.activeSlide) {
         if (delay != null) {
           return setTimeout(function() {

@@ -4,6 +4,9 @@
 class AmoebaSB.EventHelper
   constructor: () ->
     this._setupKeyHandler()
+
+    @paused = false
+
     @nextKeyEventName = "next:keyEvent"
     @prevKeyEventName = "prev:keyEvent"
     @pauseKeyEventName = "pause:keyEvent"
@@ -12,13 +15,17 @@ class AmoebaSB.EventHelper
     # next and previous keys send this
     @indexEventName = "index:event"
 
-    # called if slide doesn't handle the pause key event
-    @pauseEventName = "pause:event"
-
   triggerEvent: (el, eventName, detail) =>
     event = document.createEvent("CustomEvent")
     event.initCustomEvent(eventName, true, true, detail)
     el.dispatchEvent(event)
+
+  togglePause: () =>
+    @paused = not @paused;
+
+    # send a nextKeyEvent if we unpaused
+    if not @paused
+      AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.nextKeyEventName)
 
   _setupKeyHandler: =>
     document.addEventListener("keydown", (event) =>

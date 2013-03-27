@@ -49,6 +49,10 @@ class AmoebaSB.Slide_Base
   # call this when slide is done animating, or call with an appropriate timeout
   # to give the user time to read the text.  This will autoadvance to the next slide
   _slideIsDone: (delay) =>
+    # don't go to next slide if paused
+    if AmoebaSB.eventHelper.paused
+      return
+
     # don't do anything if we are not the current slide, could be called when the current
     # slide has changed, but a previous call back is called before old card is torn down
     if @activeSlide
