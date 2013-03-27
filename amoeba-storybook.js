@@ -105,7 +105,10 @@
       this._setupKeyHandler();
       this.nextKeyEventName = "next:keyEvent";
       this.prevKeyEventName = "prev:keyEvent";
+      this.pauseKeyEventName = "pause:keyEvent";
       this.resizeEventName = "resize:windowEvent";
+      this.indexEventName = "index:event";
+      this.pauseEventName = "pause:event";
     }
 
     EventHelper.prototype.triggerEvent = function(el, eventName, detail) {
@@ -161,6 +164,12 @@
         sendEvent = true;
       }
       switch (event.keyCode) {
+        case spaceBar:
+          event.preventDefault();
+          if (sendEvent) {
+            return this.triggerEvent(document, this.pauseKeyEventName);
+          }
+          break;
         case tabKey:
         case downArrow:
         case rightArrow:
@@ -527,7 +536,7 @@
       return $("input[name=presentationRadioGroup]:radio").change(function() {
         var theValue;
         theValue = $(this).val();
-        return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", theValue);
+        return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.indexEventName, theValue);
       });
     };
 
@@ -555,7 +564,7 @@
       }).html('<span></span>').click(function(event) {
         var slideIndex;
         slideIndex = Math.floor((event.clientX / _this.el.get(0).offsetWidth) * _this.numSteps);
-        return AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex);
+        return AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.indexEventName, slideIndex);
       });
     };
 
@@ -575,8 +584,6 @@
 
       this._setupElement = __bind(this._setupElement, this);
 
-      this._update = __bind(this._update, this);
-
       this.slideIn = __bind(this.slideIn, this);
 
       this.slideOut = __bind(this.slideOut, this);
@@ -585,10 +592,11 @@
 
       this.slideOutEvent = __bind(this.slideOutEvent, this);
 
+      this.pause = __bind(this.pause, this);
+
+      this.previous = __bind(this.previous, this);
+
       this.next = __bind(this.next, this);
-      this.stepIndex = 0;
-      this.previousStepIndex = 0;
-      this.numSteps = 0;
       this.cssID = "????";
       this.transition = 'fade';
       this.setup();
@@ -599,11 +607,14 @@
     };
 
     Slide_Base.prototype.next = function() {
-      if (this.stepIndex < (this.numSteps - 1)) {
-        this.stepIndex++;
-        this._update();
-        return true;
-      }
+      return false;
+    };
+
+    Slide_Base.prototype.previous = function() {
+      return false;
+    };
+
+    Slide_Base.prototype.pause = function() {
       return false;
     };
 
@@ -620,10 +631,6 @@
     Slide_Base.prototype.slideOut = function(afterTransitionComplete) {};
 
     Slide_Base.prototype.slideIn = function(afterTransitionComplete) {};
-
-    Slide_Base.prototype._update = function() {
-      return console.log("must subclass and implement _update");
-    };
 
     Slide_Base.prototype._setupElement = function(theID) {
       this.cssID = theID;

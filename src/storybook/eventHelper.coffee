@@ -6,7 +6,14 @@ class AmoebaSB.EventHelper
     this._setupKeyHandler()
     @nextKeyEventName = "next:keyEvent"
     @prevKeyEventName = "prev:keyEvent"
+    @pauseKeyEventName = "pause:keyEvent"
     @resizeEventName = "resize:windowEvent"
+
+    # next and previous keys send this
+    @indexEventName = "index:event"
+
+    # called if slide doesn't handle the pause key event
+    @pauseEventName = "pause:event"
 
   triggerEvent: (el, eventName, detail) =>
     event = document.createEvent("CustomEvent")
@@ -60,6 +67,11 @@ class AmoebaSB.EventHelper
       sendEvent = true
 
     switch event.keyCode
+      when spaceBar
+        event.preventDefault()
+        if sendEvent
+          this.triggerEvent(document, @pauseKeyEventName)
+
       when tabKey, downArrow, rightArrow, spaceBar
         event.preventDefault()
         if sendEvent

@@ -60,7 +60,7 @@ class AmoebaSB.NavigationControls
       theValue = $(this).val()
 
       # couldn't use the constant in the object, our this is the button.  how best to fix this?
-      AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", theValue)
+      AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.indexEventName, theValue)
     )
 
   _setupNextPrevButtons: () =>
@@ -88,5 +88,5 @@ class AmoebaSB.NavigationControls
       .html('<span></span>')
       .click( (event) =>
         slideIndex = Math.floor( ( event.clientX / @el.get(0).offsetWidth ) * @numSteps)
-        AmoebaSB.eventHelper.triggerEvent(document, "navigateToIndexEventName", slideIndex)
+        AmoebaSB.eventHelper.triggerEvent(document, AmoebaSB.eventHelper.indexEventName, slideIndex)
       )

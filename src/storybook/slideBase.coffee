@@ -2,9 +2,6 @@
 class AmoebaSB.Slide_Base
   constructor: ->
     # subclasses should set these
-    @stepIndex = 0
-    @previousStepIndex = 0
-    @numSteps = 0
     @cssID = "????"
     @transition = 'fade'
 
@@ -14,12 +11,15 @@ class AmoebaSB.Slide_Base
     console.log("must subclass and implement setup")
 
   next: =>
-    if @stepIndex < (@numSteps - 1)
-      @stepIndex++
-      this._update()
+    # subclass and return true if you want to handle next
+    return false
 
-      return true
+  previous: =>
+    # subclass and return true if you want to handle next
+    return false
 
+  pause: =>
+    # subclass and return true if you want to handle next
     return false
 
   # !! subclasses don't call or override this, override slideOut instead
@@ -39,9 +39,6 @@ class AmoebaSB.Slide_Base
 
   slideIn: (afterTransitionComplete) =>
     # subclasses override to get notified
-
-  _update: =>
-    console.log("must subclass and implement _update")
 
   # call this to set things up inside your setup override
   _setupElement: (theID) =>
