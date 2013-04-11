@@ -17,14 +17,14 @@ _.mixin
 
 
 class AmoebaSB.SlideAudio
-    constructor: (@webAudioAPI, @buffer) ->
+    constructor: (@webAudioAPI, @buffer, @transition) ->
         @source = @webAudioAPI.createBufferSource()
         @source.buffer = @buffer
         @source.connect(@webAudioAPI.destination)
         @source.loop = true
 
-    play: () ->
-        @source.noteOn(0)
+    play: (time) ->
+        @source.noteOn(time)
 
     stop: () ->
         @source.noteOff(0)
@@ -34,25 +34,52 @@ class AmoebaSB.SlideAudio
 
 class AmoebaSB.SlideAudioTransitions
     constructor: (@slides) ->
-        console.log("Setting up audio transitions")
+        console.log(@slides)
         @webAudioAPI = AmoebaSB.WebAudioAPI.getContext()
-        @bufferLoader = new AmoebaSB.AudioBufferLoader(@webAudioAPI, ["/sounds/intro-loop.mp3","/sounds/rythym-loop.mp3", "/sounds/rythym-loop2.mp3", "/sounds/chorus-loop.mp3"], @finishedLoading)
+        urls = (slide.sound_url for slide in @slides)
+        @bufferLoader = new AmoebaSB.AudioBufferLoader(@webAudioAPI, urls, @finishedLoading)
         @bufferLoader.load()
         @audioSlides = new Array()
+        @currentSlidePlaying = -1
+        @currentLoopStartTime = 0
 
     finishedLoading: (bufferList, index) =>
-        audioSlide = new AmoebaSB.SlideAudio(@webAudioAPI, bufferList[index])
-        console.log(audioSlide)
-        # alert(index)
+        transition = if @slides[index].sound_transition? then @slides[index].sound_transition else "queue"
+        audioSlide = new AmoebaSB.SlideAudio(@webAudioAPI, bufferList[index], transition)
         @audioSlides[index] = audioSlide
+        console.log(audioSlide)
+
+    playSlideAt: (slideIndex, time) ->
+        @currentSlidePlaying = slideIndex
+        @currentLoopStartTime = time
+        @audioSlides[slideIndex].play(@currentLoopStartTime)
+        console.log("Loop Start Time: " + @currentLoopStartTime)
+
 
     goto: (slideIndex) ->
-        console.log(slideIndex)
-        _.each(@audioSlides, (slide, index) =>
-            slide.stop()
-        )
-
         _.when (=> @audioSlides[slideIndex]), =>
-            @audioSlides[slideIndex].play();
+            audioSlide = @audioSlides[slideIndex]
+            console.log("RRR" + @currentSlidePlaying)
+            if @currentSlidePlaying == -1
+                @_immidiateTransition(slideIndex)
+                return
+            console.log(audioSlide)
 
-        console.log("Audio move!!")
+            if audioSlide.transition == "queue"
+                @_queueTransition(slideIndex)
+            else if audioSlide.transition == "immediate"
+                @_immidiateTransition(slideIndex)
+
+            console.log("Audio move!!")
+
+    _queueTransition: (slideIndex) ->
+        console.log(@audioSlides[@currentSlidePlaying].source)
+        curSlide = @audioSlides[@currentSlidePlaying]
+        curSlide.source.loop = false
+        @playSlideAt(slideIndex, @webAudioAPI.currentTime + curSlide.buffer.duration)
+
+    _immidiateTransition: (slideIndex) ->
+        _.each(@audioSlides, (slide, index) =>
+             slide.stop()
+        )
+        @playSlideAt(slideIndex, @webAudioAPI.currentTime)
