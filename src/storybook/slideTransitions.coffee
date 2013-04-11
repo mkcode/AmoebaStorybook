@@ -1,5 +1,5 @@
 class AmoebaSB.SlideTransitions
-  constructor: (@slides) ->
+  constructor: (@slides, @audioAPI) ->
     @duration = 1000
 
   nextIndex: () =>
@@ -10,6 +10,8 @@ class AmoebaSB.SlideTransitions
 
   goto: (theIndex) =>
     theIndex = this._validStepIndex(theIndex)
+
+    @audioAPI.goto(theIndex)
 
     if @activeStepIndex?
       goingBack = theIndex < @activeStepIndex
